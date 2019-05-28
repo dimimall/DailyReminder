@@ -18,6 +18,12 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:text="Daily Reminders"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

@@ -1,13 +1,15 @@
 package com.example.dailyreminder.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.dailyreminder.R;
@@ -21,7 +23,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<Notes> notesList;
     private Context context;
     private NotesDao notesDao;
-    public static boolean active;
     MyViewHolder vh;
 
     // Provide a reference to the views for each data item
@@ -31,7 +32,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // each data item is just a string in this case
         public TextView title, datetime;
         public View view;
-
         public MyViewHolder(View v) {
             super(v);
             view = v;
@@ -64,7 +64,41 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - replace the contents of the view with that element
         holder.title.setText("Title: "+notesList.get(position).getTitle());
         holder.datetime.setText("Date: "+notesList.get(position).getText());
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditText.class);
+                context.startActivity(intent);
+            }
+        });
 
+        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete entry")
+                        .setMessage("Are you sure you want to delete this entry?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Continue with delete operation
+                                notesDao.delete(notesList.get(position));
+                                notesList.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, notesList.size());
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return false;
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)

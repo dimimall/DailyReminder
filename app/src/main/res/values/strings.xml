@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Daily Reminder</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="device_initial_location">Fetching Location...</string>
+    <string name="initial_weather_description">Loading weather info...</string>
+    <string name="initial_weather_data">---</string>
+    <string name="change_city_description">Click Here to change city</string>
+    <string name="weather_description">This is the weather symbol</string>
+    <string name="change_city">Change City</string>
+    <string name="search_hint">Enter city name</string>
+    <string name="get_weather_text">Get Weather</string>
 </resources>

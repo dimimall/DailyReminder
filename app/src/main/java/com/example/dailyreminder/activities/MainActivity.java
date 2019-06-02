@@ -19,6 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 
 import com.example.dailyreminder.R;
 import com.example.dailyreminder.adapters.MyAdapter;
@@ -38,7 +41,7 @@ import javax.security.auth.login.LoginException;
 
 import static java.security.AccessController.getContext;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -118,13 +121,21 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_weather) {
+            Intent intent = new Intent(MainActivity.this,WeatherActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        mAdapter = new MyAdapter(notesDao.getAll(),MainActivity.this);
+
+
+        mAdapter = new MyAdapter(notesDao.getAll(), MainActivity.this);
         recyclerView.setAdapter(mAdapter);
 
         long milliseconds = 0;
@@ -137,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             try {
                 Date d = f.parse(notesDao.getAll().get(i).getText());
-                milliseconds = d.getTime();
-                Log.e("Error","milliseconds "+milliseconds+" "+calendar.getTimeInMillis());
+                calendar.setTime(d);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -154,10 +164,8 @@ public class MainActivity extends AppCompatActivity {
             // If the Toggle is turned on, set the repeating alarm with
             // a 15 minute interval.
             if (alarmManagers != null) {
-                alarmManagers.setInexactRepeating
-                        (AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                                 calendar.getTimeInMillis()+ milliseconds, repeatInterval,
-                                pendingIntent);
+                alarmManagers.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), repeatInterval,
+                        pendingIntent);
             }
 
             intentArray.add(pendingIntent);
@@ -172,19 +180,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
         }
     }
-//    // Call Back method  to get the Message form other Activity
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-//    {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        // check if the request code is same as what is passed  here it is 2
-//        if(requestCode==1)
-//        {
-//            //notesList= data.getParcelableArrayListExtra("notes");
-////            mAdapter = new MyAdapter(notesList,MainActivity.this);
-////            recyclerView.setAdapter(mAdapter);
-//        }
-//    }
 
     public void createNotificationChannel() {
         // Create a notification manager object.
@@ -210,4 +205,5 @@ public class MainActivity extends AppCompatActivity {
             mNotificationManager.createNotificationChannel(notificationChannel);
         }
     }
+
 }

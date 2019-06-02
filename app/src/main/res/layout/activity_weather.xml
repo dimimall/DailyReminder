@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:background="@color/colorWhite"
+    tools:context=".activities.WeatherActivity">
+
+    <RelativeLayout
+        android:id="@+id/temperatureContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/temperatureLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:text="Temperature"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@color/colorLightGray"/>
+
+        <TextView
+            android:id="@+id/txtTemperature"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/initial_weather_data"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorLightGray"
+            android:maxLines="1"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/windContainer"
+        android:layout_below="@+id/temperatureContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/windLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:text="Wind Speed"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@color/colorLightGray"/>
+
+        <TextView
+            android:id="@+id/txtWindSpeed"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/initial_weather_data"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorLightGray"
+            android:maxLines="1"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/humidityContainer"
+        android:layout_below="@+id/windContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/humidityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:text="Humidity"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@color/colorLightGray"/>
+
+        <TextView
+            android:id="@+id/txtHumidity"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/initial_weather_data"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorLightGray"
+            android:maxLines="1"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pressureContainer"
+        android:layout_below="@+id/humidityContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/pressureLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:text="Pressure"
+            android:textSize="20sp"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@color/colorLightGray"/>
+
+        <TextView
+            android:id="@+id/txtPressure"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/initial_weather_data"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorLightGray"
+            android:maxLines="1"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/weatherIconContainer"
+        android:layout_below="@+id/pressureContainer"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false">
+
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/cloud"
+            android:contentDescription="@string/weather_description"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtWeatherDescription"
+        android:layout_below="@+id/weatherIconContainer"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/initial_weather_description"
+        android:textColor="@color/colorLightGray"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/txtLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/device_initial_location"
+        android:textColor="@color/colorLightGray"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

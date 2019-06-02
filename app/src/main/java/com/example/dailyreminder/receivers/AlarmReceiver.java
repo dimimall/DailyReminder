@@ -54,11 +54,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent contentPendingIntent = PendingIntent.getActivity
                 (context, NOTIFICATION_ID, contentIntent, PendingIntent
                         .FLAG_UPDATE_CURRENT);
-        try {
-            contentPendingIntent.send();
-        } catch (PendingIntent.CanceledException e) {
-            Log.e("Error",e.getLocalizedMessage());
-        }
+//        try {
+//            contentPendingIntent.send();
+//        } catch (PendingIntent.CanceledException e) {
+//            Log.e("Error",e.getLocalizedMessage());
+//        }
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder
                 (context, PRIMARY_CHANNEL_ID)

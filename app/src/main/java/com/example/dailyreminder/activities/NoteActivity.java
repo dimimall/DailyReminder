@@ -32,15 +32,12 @@ public class NoteActivity extends AppCompatActivity {
     private static final int REQUEST_LOCATION = 1;
     private LocationManager locationManager;
     private String lattitude,longitude;
-    private utils my_utils;
     private NotesDao notesDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-
-        my_utils = new utils();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,8 +57,8 @@ public class NoteActivity extends AppCompatActivity {
                         // .curved() .title("Select Date")
                         .titleTextColor(getResources().getColor(R.color.colorWhite))
                         .minutesStep(1)
-                        .backgroundColor(getResources().getColor(R.color.colorPrimary))
-                        .mainColor(getResources().getColor(R.color.colorAccent))
+                        .backgroundColor(getResources().getColor(R.color.colorLightBlue))
+                        .mainColor(getResources().getColor(R.color.colorLightGray))
                         .listener(new SingleDateAndTimePickerDialog.Listener()
                         {
                             @Override public void onDateSelected(Date date)
@@ -88,9 +85,6 @@ public class NoteActivity extends AppCompatActivity {
                 String date = datetime.getText().toString();
                 Notes notes = new Notes(note,date);
                 notesDao.insertAll(notes);
-//                Intent intent=new Intent();
-//                intent.putParcelableArrayListExtra("notes", (ArrayList<? extends Parcelable>) notesDao.getAll());
-//                setResult(1,intent);
 
                 note_text.setText(null);
                 datetime.setText(null);
@@ -102,7 +96,7 @@ public class NoteActivity extends AppCompatActivity {
     public void initialViews(){
         note_text = (EditText)  findViewById(R.id.editText);
         datetime = (EditText) findViewById(R.id.editText2);
-        save = (Button) findViewById(R.id.save);
+        save = (Button) findViewById(R.id.save_edit);
     }
 
     @Override

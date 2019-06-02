@@ -8,19 +8,22 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/colorPink</item>
+        <item name="android:textColorPrimary">@color/colorLightBlue</item>
         <item name="android:textColorSecondary">@color/colorWhite</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPink</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorLightBlue</item>
+        <item name="colorPrimaryDark">@color/colorLightGray</item>
         <item name="colorAccent">@color/colorWhite</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:textColorPrimary">@color/colorLightBlue</item>
+        <item name="android:textColorSecondary">@color/colorWhite</item>
+    </style>
 
 </resources>

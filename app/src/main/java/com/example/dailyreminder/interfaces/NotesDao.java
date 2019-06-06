@@ -14,10 +14,13 @@ import java.util.List;
 public interface NotesDao {
     @Query("SELECT * FROM notes")
     List<Notes> getAll();
+
     @Insert
     void insertAll(Notes... notes);
+
     @Delete
     void delete(Notes notes);
-    @Update
-    void updateAll(Notes... notes);
+
+    @Query("UPDATE notes SET title=:title, text=:date WHERE id = :id")
+    void update(String title, String date, int id);
 }

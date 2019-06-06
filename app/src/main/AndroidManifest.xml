@@ -38,7 +38,8 @@
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity android:name=".activities.WeatherActivity" />
-        <activity android:name=".activities.EditActivity" />
+        <activity android:name=".activities.EditActivity"
+            android:theme="@style/AppTheme"/>
 
         <receiver
             android:name=".receivers.AlarmReceiver"

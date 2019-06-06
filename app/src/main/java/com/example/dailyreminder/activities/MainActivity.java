@@ -53,8 +53,9 @@ public class MainActivity extends AppCompatActivity{
     // Notification channel ID.
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
-    private NotificationManager mNotificationManager;
-    private AlarmManager alarmManagers;
+    public static NotificationManager mNotificationManager;
+    public static AlarmManager alarmManagers;
+    public static PendingIntent pendingIntent;
     private ArrayList<PendingIntent> intentArray;
 
     @Override
@@ -134,11 +135,8 @@ public class MainActivity extends AppCompatActivity{
     public void onResume(){
         super.onResume();
 
-
         mAdapter = new MyAdapter(notesDao.getAll(), MainActivity.this);
         recyclerView.setAdapter(mAdapter);
-
-        long milliseconds = 0;
 
         for (int i=0; i<notesDao.getAll().size(); i++){
 
@@ -155,7 +153,7 @@ public class MainActivity extends AppCompatActivity{
             // Loop counter `i` is used as a `requestCode`
             NOTIFICATION_ID = i;
 
-            PendingIntent pendingIntent = PendingIntent.
+            pendingIntent = PendingIntent.
                     getBroadcast(MainActivity.this, NOTIFICATION_ID, intent, 0);
 
             long repeatInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES;

@@ -10,19 +10,18 @@ import android.os.Parcelable;
 public class Notes implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int id;
     @ColumnInfo(name = "title")
     private String title;
     @ColumnInfo(name = "text")
     private String text;
-//    @ColumnInfo(name = "active")
-//    private String active;
+
 
     // Constructor
     public Notes(String title, String text){
         this.title = title;
         this.text = text;
-        //this.active = active;
     }
     public void setId(int id) { this.id = id; }
     public int getId() {return this.id;}
@@ -30,15 +29,13 @@ public class Notes implements Parcelable {
     public String getTitle() { return this.title;}
     public void setText(String text) {this.title = title;}
     public String getText() { return this.text; }
-//    public void setActive(String active) {this.active = active;}
-//    public String getActive() {return this.active;}
+
 
     //parceling part
     protected Notes(Parcel in) {
         // the order needs to be the same as in writeToParcel() method
         this.title = in.readString();
         this.text = in.readString();
-        //this.active = in.readString();
     }
 
     public static final Creator<Notes> CREATOR = new Creator<Notes>() {
@@ -62,7 +59,6 @@ public class Notes implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
         dest.writeString(this.text);
-        //dest.writeString(this.active);
     }
 
 }

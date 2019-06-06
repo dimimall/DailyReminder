@@ -2,6 +2,7 @@ package com.example.dailyreminder.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,7 +11,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,7 @@ import org.json.JSONObject;
 
 public class WeatherActivity extends AppCompatActivity {
     TextView txtLocation, txtTemperature, txtWindSpeed, txtHumidity, txtPressure, txtWeatherDescription;
-    ImageView weatherIcon;
+    ImageView weatherIcon,search;
 
     final int REQUEST_CODE = 1234;
     final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
@@ -46,7 +49,8 @@ public class WeatherActivity extends AppCompatActivity {
 
     utils myutils = new utils();
 
-    double lat,lon;
+    double lat = 0.0,lon = 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +58,13 @@ public class WeatherActivity extends AppCompatActivity {
 
         init();
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        View customView = getLayoutInflater().inflate(R.layout.main_action_bar, null);
+        getSupportActionBar().setCustomView(customView);
 
-        //538b1f109f84a4fb26067c4032b83044
 
-//        if (cityName != null) {
-//            getNewCityWeather(cityName);
-//        } else {
-            getCurrentLocationWeather();
-        //}
     }
 
     public void init(){
@@ -76,13 +77,27 @@ public class WeatherActivity extends AppCompatActivity {
         weatherIcon = findViewById(R.id.weatherIcon);
     }
 
-//    @Override
-//    public void onResume()
-//    {
-//        super.onResume();
-//
-//
-//    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+//        if (cityName != null)
+//            getNewCityWeather(cityName);
+//        else
+            getCurrentLocationWeather();
+
+        search = (ImageView) getSupportActionBar().getCustomView().findViewById(R.id.imageView);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WeatherActivity.this,MapsActivity.class);
+                intent.putExtra("latitude",lat);
+                intent.putExtra("longitude",lon);
+                startActivity(intent);
+            }
+        });
+    }
 
     private void getNewCityWeather(String cityName) {
 
@@ -101,6 +116,9 @@ public class WeatherActivity extends AppCompatActivity {
         mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                lat = location.getLatitude();
+                lon = location.getLongitude();
+
                 String longitude = String.valueOf(location.getLongitude());
                 String latitude = String.valueOf(location.getLatitude());
 
@@ -141,6 +159,27 @@ public class WeatherActivity extends AppCompatActivity {
         }
 
         mLocationManager.requestLocationUpdates(LOCATION_PROVIDER, MIN_TIME, MIN_DISTANCE, mLocationListener);
+
+        if (mLocationManager.isProviderEnabled(LOCATION_PROVIDER))
+        {
+            Location location = mLocationManager.getLastKnownLocation(LOCATION_PROVIDER);
+            if (location != null)
+            {
+                lat = location.getLatitude();
+                lon = location.getLongitude();
+
+                String longitude = String.valueOf(location.getLongitude());
+                String latitude = String.valueOf(location.getLatitude());
+
+                RequestParams requestParams = new RequestParams();
+
+                requestParams.put("lat", latitude);
+                requestParams.put("lon", longitude);
+                requestParams.put("appid", API_KEY);
+
+                apiCall(requestParams);
+            }
+        }
     }
 
     @Override

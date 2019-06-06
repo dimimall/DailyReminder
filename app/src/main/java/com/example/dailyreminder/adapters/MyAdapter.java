@@ -1,10 +1,13 @@
 package com.example.dailyreminder.adapters;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +16,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.dailyreminder.R;
+import com.example.dailyreminder.activities.EditActivity;
 import com.example.dailyreminder.interfaces.NotesDao;
 import com.example.dailyreminder.models.AppDatabase;
 import com.example.dailyreminder.models.Notes;
 
 import java.util.List;
+
+import static com.example.dailyreminder.activities.MainActivity.alarmManagers;
+import static com.example.dailyreminder.activities.MainActivity.mNotificationManager;
+import static com.example.dailyreminder.activities.MainActivity.pendingIntent;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<Notes> notesList;
@@ -67,7 +75,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, EditText.class);
+                Intent intent = new Intent(context, EditActivity.class);
+                intent.putExtra("title",notesList.get(position).getTitle());
+                intent.putExtra("date",notesList.get(position).getText());
+                intent.putExtra("id",notesList.get(position).getId());
                 context.startActivity(intent);
             }
         });
@@ -89,6 +100,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                 notesList.remove(position);
                                 notifyItemRemoved(position);
                                 notifyItemRangeChanged(position, notesList.size());
+
+                    mNotificationManager.cancelAll();
+
+                    if (alarmManagers != null) {
+                        alarmManagers.cancel(pendingIntent);
+                    }
                             }
                         })
 

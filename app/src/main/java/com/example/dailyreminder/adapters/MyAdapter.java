@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,10 @@ import com.example.dailyreminder.interfaces.NotesDao;
 import com.example.dailyreminder.models.AppDatabase;
 import com.example.dailyreminder.models.Notes;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.dailyreminder.activities.MainActivity.alarmManagers;
@@ -70,8 +75,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.title.setText("Title: "+notesList.get(position).getTitle());
-        holder.datetime.setText("Date: "+notesList.get(position).getText());
+        holder.title.setText(notesList.get(position).getTitle());
+        holder.title.setPaintFlags(holder.title.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        String[] split = notesList.get(position).getText().split(" ");
+        SimpleDateFormat format1=new SimpleDateFormat("dd-MM-yyyy");
+        Date dt1= null;
+        try {
+            dt1 = format1.parse(split[0]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        DateFormat format2=new SimpleDateFormat("EEEE");
+        String finalDay=format2.format(dt1);
+
+        holder.datetime.setText(finalDay+" "+split[1]);
+        holder.datetime.setPaintFlags(holder.datetime.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +121,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                 notifyItemRemoved(position);
                                 notifyItemRangeChanged(position, notesList.size());
 
-                    mNotificationManager.cancelAll();
+                    mNotificationManager.cancel(position);
 
                     if (alarmManagers != null) {
                         alarmManagers.cancel(pendingIntent);

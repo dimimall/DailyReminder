@@ -36,8 +36,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         lat = intent.getDoubleExtra("latitude",0.0);
         lon = intent.getDoubleExtra("longitude",0.0);
 
-        Log.d("Dimitra", "location "+lat+" "+lon);
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

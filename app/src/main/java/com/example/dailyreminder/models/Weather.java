@@ -26,7 +26,7 @@ public class Weather {
             weather.city = jsonObject.getString("name");
             weather.country = jsonObject.getJSONObject("sys").getString("country");
             weather.condition = jsonObject.getJSONArray("weather").getJSONObject(0).getInt("id");
-            weather.iconName = determineWeatherIcon(weather.condition);
+            weather.iconName = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon"); //determineWeatherIcon(weather.condition);
 
             weather.description = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
 

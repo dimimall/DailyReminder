@@ -48,8 +48,14 @@ public class MainActivity extends AppCompatActivity{
     private RecyclerView.LayoutManager layoutManager;
     private List<Notes> notesList;
     private NotesDao notesDao;
+
+    @Override
+    public int checkCallingOrSelfPermission(String permission) {
+        return super.checkCallingOrSelfPermission(permission);
+    }
+
     // Notification ID.
-    private static int NOTIFICATION_ID = 0;
+    public static int NOTIFICATION_ID = 0;
     // Notification channel ID.
     private static final String PRIMARY_CHANNEL_ID =
             "primary_notification_channel";
@@ -141,6 +147,7 @@ public class MainActivity extends AppCompatActivity{
         for (int i=0; i<notesDao.getAll().size(); i++){
 
             Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+            intent.putExtra("title",notesDao.getAll().get(i).getTitle());
 
             SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             Calendar calendar = Calendar.getInstance();
@@ -167,15 +174,6 @@ public class MainActivity extends AppCompatActivity{
             }
 
             intentArray.add(pendingIntent);
-
-//            else {
-//                // Cancel notification if the alarm is turned off.
-//                mNotificationManager.cancelAll();
-//
-//                if (alarmManagers[i] != null) {
-//                    alarmManagers[i].cancel(notifyPendingIntent);
-//                }
-//            }
         }
     }
 

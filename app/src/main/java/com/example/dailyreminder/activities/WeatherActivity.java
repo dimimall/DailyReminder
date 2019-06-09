@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.dailyreminder.R;
+import com.example.dailyreminder.Utils.WeatherHttpClient;
 import com.example.dailyreminder.Utils.utils;
 import com.example.dailyreminder.models.Weather;
 import com.loopj.android.http.AsyncHttpClient;
@@ -91,10 +93,17 @@ public class WeatherActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WeatherActivity.this,MapsActivity.class);
-                intent.putExtra("latitude",lat);
-                intent.putExtra("longitude",lon);
-                startActivity(intent);
+                if (myutils.checkInternetConenction(WeatherActivity.this))
+                {
+                    Intent intent = new Intent(WeatherActivity.this,MapsActivity.class);
+                    intent.putExtra("latitude",lat);
+                    intent.putExtra("longitude",lon);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(WeatherActivity.this, "No internet connection! Try to connect to a working internet and try again", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -234,8 +243,9 @@ public class WeatherActivity extends AppCompatActivity {
         txtWeatherDescription.setText(weather.getDescription());
         txtLocation.setText(weather.getCity() + ", " + weather.getCountry());
 
-        int resourceIdentifier = getResources().getIdentifier(weather.getIconName(), "drawable", getPackageName());
-        weatherIcon.setImageResource(resourceIdentifier);
+//        int resourceIdentifier = getResources().getIdentifier(weather.getIconName(), "drawable", getPackageName());
+//        weatherIcon.setImageResource(resourceIdentifier);
+        Glide.with(WeatherActivity.this).load("https://openweathermap.org/img/w/"+weather.getIconName()+".png").into(weatherIcon);
     }
 
 
